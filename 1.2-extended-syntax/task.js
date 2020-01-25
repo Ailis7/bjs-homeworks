@@ -11,8 +11,14 @@ function calculateQuadraticEquation(){
 }
 
 function getResult(a,b,c){
-    // код для задачи №1 писать здесь
-    //return x;
+    let d = Math.pow(b, 2) - 4 * a * c;
+  let sqrt = [];
+  if (d >= 0) {
+    let x1 = (-b + Math.sqrt(d)) / (2 * a);
+    let x2 = (-b - Math.sqrt(d)) / (2 * a);
+    sqrt = (d == 0) ? [x1] : [x1, x2];
+  }
+  return sqrt; 
 }
 
 function calculateAverageRating(){
