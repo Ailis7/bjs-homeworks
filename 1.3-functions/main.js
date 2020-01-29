@@ -1,14 +1,22 @@
 function getResult(a, b, c = 0) {
-    let D = Math.pow(b, 2) - 4 * a * c;
-    let sqrt = {};
-    if (D >= 0) {
-        let x1 = (-b + Math.sqrt(D)) / (2 * a);
-        let x2 = (-b - Math.sqrt(D)) / (2 * a);
-        sqrt = (D == 0) ? {roots: [x1], D} : {roots: [x1, x2], D};
-    } else {
-      sqrt = {D};
-    }
-    return sqrt;
+  let D = Math.pow(b, 2) - 4 * a * c;
+  let results = {};
+  if (D >= 0) {
+    let x1 = (-b + Math.sqrt(D)) / (2 * a);
+    let x2 = (-b - Math.sqrt(D)) / (2 * a);
+    results = (D == 0) ? {
+      roots: [x1],
+      D
+    } : {
+      roots: [x1, x2],
+      D
+    };
+  } else {
+    results = {
+      D
+    };
+  }
+  return results;
 }
 
 function showSolutionsMessage(a, b, c) {
@@ -34,7 +42,9 @@ function getAverageScore(data) {
     }
     return sum / subject.length;
   }
-  let averageMass = {}, subjectCount = 0, subjectAverage = 0;
+  let averageMass = {},
+    subjectCount = 0,
+    subjectAverage = 0;
   for (let prop in data) {
     averageMass[prop] = average(data[prop]);
     subjectAverage += average(data[prop]);
@@ -56,44 +66,44 @@ getAverageScore({
   french: [4, 4]
 });
 
-function getPersonData( secretData ) {
-      let data = {};
-      const search = function( man ) {
-        for (let prop in man) {
-          if (prop === "aaa") {
-            if (man[prop] === 0) {
-              data.firstName = "Эмилио";
-            } else {
-              data.firstName = "Родриго";
-            }
-          }
+function getPersonData(secretData) {
+  let data = {};
+  const search = function (man) {
+    for (let prop in man) {
+      if (prop === "aaa") {
+        if (man[prop] === 0) {
+          data.firstName = "Эмилио";
+        } else {
+          data.firstName = "Родриго";
+        }
+      }
 
-          if (prop === "bbb") {
-            if (man[prop] === 0) {
-              data.lastName = "Эмилио";
-            } else {
-              data.lastName = "Родриго";
-            }
-          }
-        } 
-      } 
-      search(secretData); 
-      return data;
+      if (prop === "bbb") {
+        if (man[prop] === 0) {
+          data.lastName = "Эмилио";
+        } else {
+          data.lastName = "Родриго";
+        }
+      }
     }
-    
-console.log( getPersonData({
+  }
+  search(secretData);
+  return data;
+}
+
+console.log(getPersonData({
   aaa: 0,
   bbb: 0
-  }));
-console.log( getPersonData({
+}));
+console.log(getPersonData({
   aaa: 1,
   bbb: 0
-  }));
-console.log( getPersonData({
+}));
+console.log(getPersonData({
   aaa: 0,
   bbb: 1
-  }));
-console.log( getPersonData({
+}));
+console.log(getPersonData({
   aaa: 1,
   bbb: 1
-  }));
+}));
