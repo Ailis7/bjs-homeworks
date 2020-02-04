@@ -45,5 +45,3 @@ if (arr == Infinity) {
 }
 console.log(isFinite(arr));
 console.log(arr);
-
-
