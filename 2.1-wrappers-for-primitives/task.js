@@ -1,15 +1,4 @@
 "use strict";
-function calculateMortgage() {
-  let percent = window.percent.value;
-  let contribution = window.contribution.value;
-  let amount = window.amount.value;
-  let date = window.date.value;
-
-  let result = calculateTotalMortgage(percent, contribution, amount, date);
-  let span = window.mortageResult;
-  span.textContent = result;
-}
-
 function calculateTotalMortgage(percent, contribution, amount, date) {
     percent = parseFloat(percent);
     contribution = parseFloat(contribution);
@@ -20,28 +9,18 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
             return `Параметр ${prop} содержит неправильное значение ${check[prop]}`
         }
     }
-
-
-
-  let totalAmount = percent + contribution + amount;
-  // код для задачи №1 писать здесь
-  return totalAmount;
-}
-
-function sayHello() {
-  let name = window.personName.value;
-  let greeting = getGreeting(name);
-  let span = window.helloResult;
-  span.textContent = greeting;
+    //Далее вычесления
+    let totalReturnSum = amount - contribution;
+    let today = new Date();
+    let creditMonth = (date.getFullYear() - today.getFullYear()) * 12 + (date.getMonth() - today.getMonth());
+    let percentPerMonth = percent / 100 / 12;
+    let monthPayment = totalReturnSum * (percentPerMonth + percentPerMonth / (((1 + percentPerMonth) ** creditMonth) - 1));
+    let totalAmount = monthPayment * creditMonth;
+    totalAmount = totalAmount.toFixed(2);
+    return totalAmount;
 }
 
 function getGreeting(name) {
   // код для задачи №2 писать здесь
   //return greeting;
 }
-let arr = 11 / 0;
-if (arr == Infinity) {
-    console.log(`ghbdtn`)
-}
-console.log(isFinite(arr));
-console.log(arr);
