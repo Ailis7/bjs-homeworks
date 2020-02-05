@@ -16,11 +16,13 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
     let percentPerMonth = percent / 100 / 12;
     let monthPayment = totalReturnSum * (percentPerMonth + percentPerMonth / (((1 + percentPerMonth) ** creditMonth) - 1));
     let totalAmount = monthPayment * creditMonth;
-    totalAmount = totalAmount.toFixed(2);
+    totalAmount = parseFloat(totalAmount.toFixed(2));
+    console.log(totalAmount);
     return totalAmount;
 }
 
 function getGreeting(name) {
-  // код для задачи №2 писать здесь
-  //return greeting;
+  let greeting = (name === "" || name === null || name === undefined) ? "Привет, мир! Меня зовут Аноним" : `Привет, мир! Меня зовут ${name}`;
+  console.log(greeting);
+  return greeting;
 }
