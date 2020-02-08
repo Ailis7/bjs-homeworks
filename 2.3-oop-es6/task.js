@@ -73,39 +73,42 @@ class Studentlog {
     return this.name;
   }
 
-
-
   addGrade(grade, subject) {
     if (grade > 0 && grade < 6) {
-
-      return subjectArr;
+      if (this.subjectArr[subject] === undefined) {
+        this.subjectArr[subject] = [grade];
+      } else {
+        this.subjectArr[subject].push(grade);
+      }
+      return grade;
     } else {
       return `Вы пытались поставить оценку "${grade}" по предмету "${subject}". Допускаются только числа от 1 до 5`;
     }
   }
 
   getAverageBySubject(subject) {
-    return grade;
+    //return grade;
   }
 }
 
 const log = new Studentlog("Олег Никифоров'");
 console.log(log);
 console.log(log.getName());
-console.log(log.addGrade(3, 'algebra'));
+console.log(log.addGrade(3, "algebra"));
 // 1
 
-console.log(log.addGrade('отлично!', 'math'));
+console.log(log.addGrade("отлично!", "math"));
 // Вы пытались поставить оценку "отлично!" по предмету "math". Допускаются только числа от 1 до 5.
 // 0
 
-console.log(log.addGrade(4, 'algebra'));
+console.log(log.addGrade(4, "algebra"));
 // 1
 
-console.log(log.addGrade(5, 'geometry'));
-// 1
+console.log(log.addGrade(5, "geometry"));
+console.log(log.addGrade(1, "geometry"));
 
-console.log(log.addGrade(25, 'geometry'));
+console.log(log.addGrade(25, "geometry"));
 // Вы пытались поставить оценку "25" по предмету "geometry". Допускаются только числа от 1 до 5.
 // 1
-console.log(log.getAverageBySubject('algebra')); // 3
+console.log(log.getAverageBySubject("algebra")); // 3
+console.log(log.subjectArr);
