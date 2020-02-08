@@ -87,28 +87,51 @@ class Studentlog {
   }
 
   getAverageBySubject(subject) {
-    //return grade;
+    let subjectArr = this.subjectArr[subject];
+    subject = 0;
+    if (subjectArr === undefined) {
+      return 0;
+    }
+    for (let i = 0; i < subjectArr.length; i++) {
+      subject += subjectArr[i];
+    }
+    return subject / subjectArr.length;
+  }
+
+  getTotalAverage() {
+    if (this.subjectArr === {}) {
+      return 0;
+    }
+    let total = 0,
+      totalStack = 0;
+    for (let prop in this.subjectArr) {
+      for (let i = 0; i < this.subjectArr[prop].length; i++) {
+        total += this.subjectArr[prop][i];
+        totalStack++;
+      }
+    }
+    if (Number.isNaN(total / totalStack) === true) {
+      return 0;
+    } else {
+      return total / totalStack;
+    }
   }
 }
 
 const log = new Studentlog("Олег Никифоров'");
 console.log(log);
 console.log(log.getName());
-console.log(log.addGrade(3, "algebra"));
-// 1
+// log.addGrade(2, "algebra");
+// log.addGrade(4, "algebra");
+// log.addGrade(5, "geometry");
+// log.addGrade(4, "geometry");
 
-console.log(log.addGrade("отлично!", "math"));
-// Вы пытались поставить оценку "отлично!" по предмету "math". Допускаются только числа от 1 до 5.
-// 0
-
-console.log(log.addGrade(4, "algebra"));
-// 1
-
-console.log(log.addGrade(5, "geometry"));
-console.log(log.addGrade(1, "geometry"));
-
-console.log(log.addGrade(25, "geometry"));
-// Вы пытались поставить оценку "25" по предмету "geometry". Допускаются только числа от 1 до 5.
-// 1
+console.log(log.getAverageBySubject("geometry")); // 4.5
 console.log(log.getAverageBySubject("algebra")); // 3
-console.log(log.subjectArr);
+console.log(log.getAverageBySubject("math")); // 0
+
+console.log(log.getTotalAverage());
+// let a = {a: 1}
+// for (let prop in a) {
+//   console.log(prop, a[prop]);
+// }
