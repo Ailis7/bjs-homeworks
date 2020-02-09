@@ -63,7 +63,7 @@ const stormStaff = new StormStaff("Посох Бури", 10, staff.durability, 3
 // console.log(stormStaff.isBroken());
 // console.log(staff.isBroken());
 
-class Studentlog {
+class StudentLog {
   constructor(name) {
     this.name = name;
     this.subjectArr = {};
@@ -118,7 +118,7 @@ class Studentlog {
   }
 }
 
-const log = new Studentlog("Олег Никифоров'");
+const log = new StudentLog("Олег Никифоров'");
 console.log(log);
 console.log(log.getName());
 // log.addGrade(2, "algebra");
