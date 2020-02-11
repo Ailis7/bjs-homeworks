@@ -1,10 +1,6 @@
 class Weapon {
-  constructor(name, attack, durability, range) {
+  constructor(name) {
     this.name = name;
-    this.attack = attack;
-    this.durability = durability;
-    this.range = range;
-    this.originalDurability = durability;
   }
   takeDamage(damage) {
     this.durability = this.durability - damage;
@@ -14,8 +10,12 @@ class Weapon {
   getDamage() {
     if (this.durability === 0) {
       this.attack = 0;
+      return this.attack;
     } else if (this.durability < this.originalDurability * 0.3) {
       this.attack = this.attack / 2;
+      return this.attack;
+    } else {
+      return this.attack;
     }
   }
   isBroken() {
@@ -27,31 +27,90 @@ class Weapon {
   }
 }
 
-class Sword extends Weapon {}
-class Ax extends Sword {}
-class Arm extends Weapon {}
-class Bow extends Weapon {}
-class LongBow extends Bow {}
-class Knife extends Weapon {}
-class Staff extends Weapon {}
-class StormStaff extends Staff {}
+class Sword extends Weapon {
+  constructor(name) {
+    super(name);
+    this.attack = 25;
+    this.durability = 500;
+    this.range = 1;
+    this.originalDurability = this.durability;
+  }
+}
+class Ax extends Sword {
+  constructor(name) {
+    super(name);
+    this.attack = 27;
+    this.durability = 1000;
+    this.originalDurability = 1000;
+  }
+}
+class Arm extends Weapon {
+  constructor(name) {
+    super(name);
+    this.attack = 1;
+    this.durability = Infinity;
+    this.range = 1;
+    this.originalDurability = this.durability;
+  }
+}
+class Bow extends Weapon {
+  constructor(name) {
+    super(name);
+    this.attack = 10;
+    this.durability = 200;
+    this.range = 3;
+    this.originalDurability = this.durability;
+  }
+}
+class LongBow extends Bow {
+  constructor(name) {
+    super(name);
+    this.attack = 15;
+    this.range = 4;
+  }
+}
+class Knife extends Weapon {
+  constructor(name) {
+    super(name);
+    this.attack = 5;
+    this.durability = 300;
+    this.range = 1;
+    this.originalDurability = this.durability;
+  }
+}
+class Staff extends Weapon {
+  constructor(name) {
+    super(name);
+    this.attack = 8;
+    this.durability = 300;
+    this.range = 2;
+    this.originalDurability = this.durability;
+  }
+}
+class StormStaff extends Staff {
+  constructor(name) {
+    super(name);
+    this.attack = 10;
+    this.range = 3;
+  }
+}
 
-const sword = new Sword("Меч", 25, 500, 1);
-const arm = new Arm("Рука", 1, Infinity, 1);
-const bow = new Bow("Лук", 10, 200, 3);
-// console.log(bow.name); // Лук
-// console.log(bow.attack); // 10
-// console.log(bow.durability); // 200
-// console.log(bow.range); // 3
-const knife = new Knife("Нож", 5, 300, 1);
-const staff = new Staff("Посох", 8, 300, 2);
+const sword = new Sword("Меч");
+const arm = new Arm("Рука");
+const bow = new Bow("Лук");
+const knife = new Knife("Нож");
+const staff = new Staff("Посох");
 
-const longBow = new LongBow("Длинный лук", 15, bow.durability, 4);
-const ax = new Ax("Секира", 27, 800, sword.range);
-const stormStaff = new StormStaff("Посох Бури", 10, staff.durability, 3);
-//console.log(stormStaff.isBroken())
-// sword.takeDamage(450);
-// stormStaff.takeDamage(500);
+const longBow = new LongBow("Длинный лук");
+const ax = new Ax("Секира");
+const stormStaff = new StormStaff("Посох Бури");
+
+longBow.takeDamage(170);
+console.log(longBow);
+console.log(longBow.getDamage());
+
+//stormStaff.takeDamage(500);
+//superSword.takeDamage(900);
 // console.log(sword);
 // console.log(arm);
 // console.log(bow);
@@ -60,7 +119,7 @@ const stormStaff = new StormStaff("Посох Бури", 10, staff.durability, 3
 // console.log(longBow);
 // console.log(ax);
 // console.log(stormStaff);
-// console.log(stormStaff.isBroken());
+// console.log(stormStaff.getDamage());
 // console.log(staff.isBroken());
 
 class StudentLog {
@@ -119,18 +178,18 @@ class StudentLog {
 }
 
 const log = new StudentLog("Олег Никифоров'");
-console.log(log);
-console.log(log.getName());
-// log.addGrade(2, "algebra");
-// log.addGrade(4, "algebra");
-// log.addGrade(5, "geometry");
-// log.addGrade(4, "geometry");
+// console.log(log);
+// console.log(log.getName());
+// // log.addGrade(2, "algebra");
+// // log.addGrade(4, "algebra");
+// // log.addGrade(5, "geometry");
+// // log.addGrade(4, "geometry");
 
-console.log(log.getAverageBySubject("geometry")); // 4.5
-console.log(log.getAverageBySubject("algebra")); // 3
-console.log(log.getAverageBySubject("math")); // 0
+// console.log(log.getAverageBySubject("geometry")); // 4.5
+// console.log(log.getAverageBySubject("algebra")); // 3
+// console.log(log.getAverageBySubject("math")); // 0
 
-console.log(log.getTotalAverage());
+// console.log(log.getTotalAverage());
 // let a = {a: 1}
 // for (let prop in a) {
 //   console.log(prop, a[prop]);
