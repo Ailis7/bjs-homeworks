@@ -5,15 +5,12 @@ class Weapon {
   takeDamage(damage) {
     this.durability = this.durability - damage;
     this.durability = this.durability < 0 ? 0 : this.durability;
-    this.getDamage();
   }
   getDamage() {
     if (this.durability === 0) {
-      this.attack = 0;
-      return this.attack;
+      return 0;
     } else if (this.durability < this.originalDurability * 0.3) {
-      this.attack = this.attack / 2;
-      return this.attack;
+      return this.attack / 2;
     } else {
       return this.attack;
     }
