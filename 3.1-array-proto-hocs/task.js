@@ -52,12 +52,16 @@ function compareArrays( arr1, arr2 ) {
 // compareArrays([1, 2, 3], [2, 3, 1]); // false, разные индексы, хотя и одинаковые значения
 // compareArrays([8, 1, 2], [8, 1, 2]); // true
 
-function memorize(...args) {
+const mSum = function memorize(...fn, limit) {
     let results = [];
 
-    // Замедление на половину секунды.
-    sleep(500); // Можно использовать другое значение замедления.
-    return args.reduce((sum, arg) => {
-        return sum += +arg;
+    
+    //sleep(500); // Можно использовать другое значение замедления.
+    return limit.reduce((sum, limit) => {
+        return sum += +limit;
     }, 0);
 }
+console.log(mSum(100, 2, 3, 4, 6));
+
+const a = [{arg: [1, 2, 3}];
+console.log(a.find());
