@@ -12,8 +12,9 @@ function compareArrays(arr1, arr2) {
 }
 
 const sum = function sumary(...args) {
-  sleep(1500); // Можно использовать другое значение замедления.
+  sleep(500); // Можно использовать другое значение замедления.
   return args.reduce((sum, arg) => {
+    //console.log(sum += +arg);
     return sum += +arg;
   }, 0);
 };
@@ -35,31 +36,34 @@ function memorize(fn, limit, results = []) {
     };
 
     let a = JSON.stringify(results);
-    console.table(a);
+    //console.table(a);
     return results;
   };
 }
 const mSum = memorize(sum, 5);
 
-mSum(1, 2);
-mSum(3, 6);
-console.log(mSum(1, 2) === 3);
-mSum(1, 2);
-mSum(1, 9);
-mSum(4, 7);
-mSum(8, 9);
-mSum(7, 8);
-mSum(1, 2);
-mSum(4, 7);
+// mSum(1, 2);
+// mSum(3, 6);
+// console.log(mSum(1, 2) === 3);
+// mSum(1, 2);
+// mSum(1, 9);
+// mSum(4, 7);
+// mSum(8, 9);
+// mSum(7, 8);
+// mSum(1, 2);
+// mSum(4, 7);
 
 
-let testArr = [ [1,2,3], [1,2], [1,2,3], [1,2], [9,5,2,4] ];
-function testCase(testFunction, procTime) {
+let testArr = [ [1,2,3], [1,2], [1,2,3], [1,2], [9,5,2,4], [1, 2], [7, 8, 9] ];
+function testCase(testFunction, array) {
+
   console.time(testFunction);
-  array.forEach(element => {
+  array.forEach(element => {console.log(sum(...element));
     
   });
+  console.timeEnd(testFunction);
 };
-console.time(sum);
-console.log(sum(1, 2, 3));
-console.timeEnd(sum);
+testCase(sum, testArr)
+// console.time(sum);
+// console.log(sum(1, 2, 3));
+// console.timeEnd(sum);
