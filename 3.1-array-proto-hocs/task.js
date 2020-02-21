@@ -35,7 +35,7 @@ function memorize(fn, limit, results = []) {
       result: sum(...arguments)
     };
 
-    let a = JSON.stringify(results);
+    //let a = JSON.stringify(results);
     //console.table(a);
     return results;
   };
@@ -56,14 +56,11 @@ const mSum = memorize(sum, 5);
 
 let testArr = [ [1,2,3], [1,2], [1,2,3], [1,2], [9,5,2,4], [1, 2], [7, 8, 9] ];
 function testCase(testFunction, array) {
-
   console.time(testFunction);
-  array.forEach(element => {console.log(sum(...element));
-    
+  for (let i = 0; i < 100; i++) {
+    array.forEach(element => {testFunction(...element);
   });
+  }
   console.timeEnd(testFunction);
 };
-testCase(sum, testArr)
-// console.time(sum);
-// console.log(sum(1, 2, 3));
-// console.timeEnd(sum);
+testCase(mSum, testArr)
