@@ -1,4 +1,5 @@
 "use strict";
+
 function sleep(milliseconds) {
   let e = new Date().getTime() + milliseconds;
   while (new Date().getTime() <= e) {}
@@ -21,46 +22,56 @@ const sum = function sumary(...args) {
 
 function memorize(fn, limit, results = []) {
 
-  return function() {
-    if (results.find(arr => compareArrays(arr.arg, [...arguments]))) {
-      return results[
-        results.findIndex(arr => compareArrays(arr.arg, [...arguments]))
-      ].result;
+  return function () {
+    let fastResult = results.find(arr => compareArrays(arr.arg, [...arguments]));
+    if (fastResult !== undefined) {
+      return fastResult.result;
     }
     if (results.length === limit) {
       results.splice(0, 1);
     }
+    let finishResult = results.length;
     results[results.length] = {
       arg: [...arguments],
-      result: sum(...arguments)
+      result: fn(...arguments)
     };
 
-    //let a = JSON.stringify(results);
-    //console.table(a);
-    return results;
+    // let a = JSON.stringify(results);
+    // console.log(results[finishResult].result);
+    return results[finishResult].result;
   };
 }
 const mSum = memorize(sum, 5);
 
-// mSum(1, 2);
-// mSum(3, 6);
+mSum(1, 2);
+mSum(3, 6);
 // console.log(mSum(1, 2) === 3);
-// mSum(1, 2);
+mSum(1, 2);
 // mSum(1, 9);
 // mSum(4, 7);
 // mSum(8, 9);
 // mSum(7, 8);
-// mSum(1, 2);
+// mSum(1, 2);  
 // mSum(4, 7);
 
 
-let testArr = [ [1,2,3], [1,2], [1,2,3], [1,2], [9,5,2,4], [1, 2], [7, 8, 9] ];
+let testArr = [
+  [1, 2, 3],
+  [1, 2],
+  [1, 2, 3],
+  [1, 2],
+  [9, 5, 2, 4],
+  [1, 2],
+  [7, 8, 9]
+];
+
 function testCase(testFunction, array) {
   console.time(testFunction);
   for (let i = 0; i < 100; i++) {
-    array.forEach(element => {testFunction(...element);
-  });
+    array.forEach(element => {
+      testFunction(...element);
+    });
   }
   console.timeEnd(testFunction);
 };
-testCase(mSum, testArr)
+//testCase(mSum, testArr)
