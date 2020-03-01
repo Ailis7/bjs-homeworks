@@ -1,18 +1,20 @@
-"use strict"
+'use strict'
 class AlarmClock {
     constructor() {
         this.alarmCollection = [];
         this.timerId = {};
     }
+
     addClock(date, action, alarmID) {
-        if (alarmID === undefined) return console.error("ERROR - введите идентификатор будильника");
-        if (this.alarmCollection.find(identif => identif.ID === alarmID)) return console.error("Error - уже есть такое имя");
-        this.alarmCollection[this.alarmCollection.length] = {
-            "ID": alarmID,
-            "time": date,
-            "callback": action
-        }
+        if (alarmID === undefined) return console.error('ERROR - введите идентификатор будильника');
+        if (this.alarmCollection.find(identif => identif.ID === alarmID)) return console.error('Error - уже есть такое имя');
+        this.alarmCollection.push({
+            'ID': alarmID,
+            'time': date,
+            'callback': action
+        })
     }
+
     removeClock(alarmID) {
         let deleteItem = this.alarmCollection.findIndex(element => element.ID === alarmID);
         if (deleteItem === -1) return console.log(false);
@@ -20,19 +22,22 @@ class AlarmClock {
         clearInterval(this.timerId[alarmID]);
         return console.log(true);
     }
+
     getCurrentFormattedTime() {
-        return (new Date().getHours() + ":" + new Date().getMinutes());
+        return (new Date().toLocaleTimeString('ru').split(':').splice(0, 2).join(':'));
     }
+
     start() {
         let checkClock = () => {
             function transformDate(time) {
-                let dateArr = time.split(`:`);
+                let dateArr = time.split(':');
                 return (Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), (dateArr[0] - 3), dateArr[1]) - new Date())
             }
             this.alarmCollection.forEach(element => this.timerId[element.ID] = setInterval(element.callback, transformDate(element.time)));
         }
         return checkClock();
     }
+
     stop() {
         for (let prop in this.timerId) {
             if (this.timerId[prop] !== null) {
@@ -41,9 +46,11 @@ class AlarmClock {
             }
         }
     }
+
     printAlarms() {
-        this.alarmCollection.forEach(element => console.log(`"${element.ID}" - ${element.time}`));
+        this.alarmCollection.forEach(element => console.log(`'${element.ID}' - ${element.time}`));
     }
+
     clearAlarms() {
         this.stop();
         this.timerId = {};
@@ -52,34 +59,41 @@ class AlarmClock {
 }
 
 function test() {
-    console.log("УРААА");
+    console.log('УРААА');
 }
 
 let abv = new AlarmClock();
 
 function testCase() {
     abv.addClock(abv.getCurrentFormattedTime(), function () {
-        console.log("Hello world");
-    }, "firstAlarm");
+        console.log('Hello world');
+    }, 'firstAlarm');
 
     function plusMinute(n) {
-        let plus = abv.getCurrentFormattedTime().split(":")
+        let plus = abv.getCurrentFormattedTime().split(':')
         plus[1] = parseFloat(plus[1]) + n;
-        return plus.join(":")
+        return plus.join(':');
     }
 
     abv.addClock(plusMinute(1), function () {
-        console.log("REMOVE world");
-        abv.removeClock("secondAlarm");
-    }, "secondAlarm");
+        console.log('REMOVE world');
+        abv.removeClock('secondAlarm');
+    }, 'secondAlarm');
 
     abv.addClock(plusMinute(2), function () {
-        console.log("Remove ALL alarms");
+        console.log('Remove ALL alarms');
         abv.stop();
-    }, "thirdAlarm");
+    }, 'thirdAlarm');
+
     abv.start();
 }
+
 testCase();
+
+let a = new Date('December 17, 1995 03:24:00').toLocaleTimeString("ru").split(":").splice(0, 2).join(":")
+//a = a.toLocaleTimeString("ru").split(":");
+//a = a.splice(0, 2)
+console.log(a);
 
 // abv.addClock("16:16", "act");
 // abv.addClock("18:40", test, "Hi");
