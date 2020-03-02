@@ -22,7 +22,7 @@ class AlarmClock {
       element => element.ID === alarmID
     );
     if (deleteItem === -1) return console.log(false);
-    this.alarmCollection.splice(deleteItem, ++deleteItem);
+    this.alarmCollection.splice(deleteItem, deleteItem);
     clearInterval(this.timerId[alarmID]);
     return console.log(true);
   }
@@ -40,21 +40,12 @@ class AlarmClock {
         console.log(alarm.time, abv.getCurrentFormattedTime())
       if (alarm.time === abv.getCurrentFormattedTime()) {
         this.timerId[alarm.ID] = setInterval(alarm.callback);
-        console.log(this.timerId[alarm.ID]);
       }
     };
 
     setInterval(() => {
         this.alarmCollection.forEach(element => checkClock(element))
     }, 30000)
-
-    //     function transformDate(time) {
-    //         let dateArr = time.split(':');
-    //         return (Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), (dateArr[0] - 3), dateArr[1]) - new Date())
-    //     }
-    //     this.alarmCollection.forEach(element => this.timerId[element.ID] = setInterval(element.callback, transformDate(element.time)));
-    // }
-    // return checkClock();
   }
 
   stop() {
@@ -97,8 +88,8 @@ function testCase() {
   function plusMinute(n) {
     let plus = abv.getCurrentFormattedTime().split(":");
     plus[1] = parseFloat(plus[1]) + n;
-    if (plus[1].length < 2) {
-        plus[1] = "0" + plus[1]
+    if (plus[1].length === 1) {
+        plus[1] = "0" + plus[1];
     }
     return plus.join(":");
   }
@@ -126,13 +117,11 @@ function testCase() {
 
 testCase();
 
-let a = new Date("December 17, 1995 03:24:00")
-  .toLocaleTimeString("ru")
-  .split(":")
-  .splice(0, 2)
-  .join(":");
-
-
+// let a = new Date("December 17, 1995 03:24:00")
+//   .toLocaleTimeString("ru")
+//   .split(":")
+//   .splice(0, 2)
+//   .join(":");
 
 //let b = 4;
 //console.log(Date().getMinutes(b))
