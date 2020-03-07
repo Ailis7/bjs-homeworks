@@ -23,7 +23,6 @@ class AlarmClock {
     );
     if (deleteItem === -1) return console.log(false);
     this.alarmCollection.splice(deleteItem, deleteItem);
-    clearInterval(this.timerId[alarmID]);
     return console.log(true);
   }
 
@@ -37,24 +36,20 @@ class AlarmClock {
 
   start() {
     let checkClock = alarm => {
-        console.log(alarm.time, abv.getCurrentFormattedTime())
-      if (alarm.time === abv.getCurrentFormattedTime()) {
-        this.timerId[alarm.ID] = setInterval(alarm.callback);
+      if (alarm.time === this.getCurrentFormattedTime()) {
+        alarm.callback();
       }
     };
 
-    setInterval(() => {
+    this.timerId.alarm = setInterval(() => {
         this.alarmCollection.forEach(element => checkClock(element))
-    }, 30000)
+    }, 1000)
   }
 
   stop() {
-    for (let prop in this.timerId) {
-      if (this.timerId[prop] !== null) {
-        clearInterval(this.timerId[prop]);
-        this.timerId[prop] = null;
-      }
-    }
+    clearInterval(this.timerId.alarm);
+    this.timerId.alarm = null;
+
   }
 
   printAlarms() {
@@ -74,9 +69,9 @@ function test() {
   console.log("УРААА");
 }
 
-let abv = new AlarmClock();
+let ringToMinute = new AlarmClock();
 
-function testCase() {
+function testCase(abv) {
   abv.addClock(
     abv.getCurrentFormattedTime(),
     function() {
@@ -115,7 +110,7 @@ function testCase() {
   abv.start();
 }
 
-testCase();
+testCase(ringToMinute);
 
 // let a = new Date("December 17, 1995 03:24:00")
 //   .toLocaleTimeString("ru")
