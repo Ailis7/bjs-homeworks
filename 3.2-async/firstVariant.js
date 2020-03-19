@@ -2,7 +2,7 @@
 class AlarmClock {
   constructor() {
     this.alarmCollection = [];
-    this.timerId = null;
+    this.timerId = {alarm: null};
   }
 
   addClock(date, action, alarmID) {
@@ -22,8 +22,8 @@ class AlarmClock {
       element => element.ID === alarmID
     );
     if (deleteItem === -1) return console.log(false);
-    this.alarmCollection.splice(deleteItem, ++deleteItem);
-    clearInterval(this.timerId);
+    this.alarmCollection.splice(deleteItem, deleteItem);
+    clearInterval(this.timerId[alarmID]);
     return console.log(true);
   }
 
@@ -37,26 +37,24 @@ class AlarmClock {
 
   start() {
     let checkClock = alarm => {
-      console.log(alarm.time, abv.getCurrentFormattedTime())
+        console.log(alarm.time, abv.getCurrentFormattedTime())
       if (alarm.time === abv.getCurrentFormattedTime()) {
-        if (this.timerId === null) {
-          this.timerId = [setInterval(alarm.callback)]
-        } else {
-          this.timerId.push(setInterval(alarm.callback));
-        }
-        console.log(this.timerId)
+        this.timerId[alarm.ID] = setInterval(alarm.callback);
       }
     };
 
     setInterval(() => {
-      this.alarmCollection.forEach(element => checkClock(element))
+        this.alarmCollection.forEach(element => checkClock(element))
     }, 30000)
   }
 
   stop() {
-    clearInterval(this.timerId);
-    this.timerId = null;
-
+    for (let prop in this.timerId) {
+      if (this.timerId[prop] !== null) {
+        clearInterval(this.timerId[prop]);
+        this.timerId[prop] = null;
+      }
+    }
   }
 
   printAlarms() {
@@ -67,6 +65,7 @@ class AlarmClock {
 
   clearAlarms() {
     this.stop();
+    this.timerId = {};
     this.alarmCollection = [];
   }
 }
@@ -80,7 +79,7 @@ let abv = new AlarmClock();
 function testCase() {
   abv.addClock(
     abv.getCurrentFormattedTime(),
-    function () {
+    function() {
       console.log("Hello world");
     },
     "firstAlarm"
@@ -90,14 +89,14 @@ function testCase() {
     let plus = abv.getCurrentFormattedTime().split(":");
     plus[1] = parseFloat(plus[1]) + n;
     if (plus[1].length === 1) {
-      plus[1] = "0" + plus[1];
+        plus[1] = "0" + plus[1];
     }
     return plus.join(":");
   }
 
   abv.addClock(
     plusMinute(1),
-    function () {
+    function() {
       console.log("REMOVE world");
       abv.removeClock("secondAlarm");
     },
@@ -106,7 +105,7 @@ function testCase() {
 
   abv.addClock(
     plusMinute(2),
-    function () {
+    function() {
       console.log("Remove ALL alarms");
       abv.stop();
     },
@@ -116,9 +115,7 @@ function testCase() {
   abv.start();
 }
 
-//testCase();
-
-
+testCase();
 
 // let a = new Date("December 17, 1995 03:24:00")
 //   .toLocaleTimeString("ru")
