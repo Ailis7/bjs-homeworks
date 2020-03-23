@@ -22,7 +22,9 @@ class AlarmClock {
       element => element.ID === alarmID
     );
     if (deleteItem === -1) return console.log(false);
+    console.log(this.alarmCollection[1], this.alarmCollection[2]);
     this.alarmCollection.splice(deleteItem, ++deleteItem);
+    console.log(this.alarmCollection[1], this.alarmCollection[2]);
     clearInterval(this.timerId);
     return console.log(true);
   }
@@ -37,14 +39,9 @@ class AlarmClock {
 
   start() {
     let checkClock = alarm => {
-      console.log(alarm.time, abv.getCurrentFormattedTime())
-      if (alarm.time === abv.getCurrentFormattedTime()) {
-        if (this.timerId === null) {
-          this.timerId = [setInterval(alarm.callback)]
-        } else {
-          this.timerId.push(setInterval(alarm.callback));
-        }
-        console.log(this.timerId)
+      console.log(alarm.time, this.getCurrentFormattedTime())
+      if (alarm.time === this.getCurrentFormattedTime()) {
+        alarm.callback();
       }
     };
 
@@ -81,7 +78,7 @@ function testCase() {
   abv.addClock(
     abv.getCurrentFormattedTime(),
     function () {
-      console.log("Hello world");
+      abv.timerId = setInterval(() => console.log("Hello world"));
     },
     "firstAlarm"
   );
@@ -116,7 +113,7 @@ function testCase() {
   abv.start();
 }
 
-//testCase();
+testCase();
 
 
 
